@@ -31,6 +31,18 @@ let setAlan = aTuringRef.set({
   'born': 1912
 });
 
+let newDocRef = db.collection('users').doc('billybob');
+
+let setBilly = newDocRef.set({
+    'first': 'billy',
+    'middle': 'bobbyyyy',
+    'second-middle': 'bobbers',
+    'last': 'bobston',
+    'born': 2112,
+    'eats': 'lots of food'
+})
+
+
 ///////////////////GET DATA//////////////////////
 db.collection('users').get()
   .then((snapshot) => {
