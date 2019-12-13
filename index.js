@@ -44,6 +44,13 @@ let setBilly = newDocRef.set({
     'likes': ['dogs', 'cats', 'monkeys', 54, {'getting': 'paid', 'the-year': 1957}]
 })
 
+let firstRestaurant = db.collection('restaurants').doc('mcds')
+
+let setMcDs = firstRestaurant.set({
+  'name': 'mcdonalds',
+  'type': 'fastfood',
+  'sells': ['burgers', 'fries', 'nuggets']
+})
 
 ///////////////////GET DATA//////////////////////
 db.collection('users').get()
@@ -56,4 +63,13 @@ db.collection('users').get()
     console.log('Error getting documents', err);
   });
 
+db.collection('restaurants').get()
+  .then(snapshot => {
+    snapshot.forEach(doc => {
+      console.log(doc.id, '=>', doc.data())
+    })
+  })
+  .catch(err => {
+    console.log('ERROR RETRIEVING RESTAURANTS', err)
+  })
 server.listen(5000, () => console.log(`\n=== server listening on port 5000 === \n`))
