@@ -66,10 +66,25 @@ db.collection('users').get()
 db.collection('restaurants').get()
   .then(snapshot => {
     snapshot.forEach(doc => {
-      console.log(doc.id, '=>', doc.data())
+      console.log(doc.id, '🍔', doc.data())
     })
   })
   .catch(err => {
     console.log('ERROR RETRIEVING RESTAURANTS', err)
   })
+
+server.get('/users', (req, res) => {
+  const usersArr = [];
+  db.collection('users').get()
+    .then(users => {
+      users.forEach(doc => {
+        usersArr.push(doc.id, '===========', doc.data())
+      })
+      res.json(usersArr)
+    })
+    .catch(err => {
+      console.log('GETTING USERS ENDPOINT ERR', err)
+      res.status(500).json({error: 'there was an error getting the users'})
+    })
+})
 server.listen(5000, () => console.log(`\n=== server listening on port 5000 === \n`))
