@@ -73,6 +73,7 @@ db.collection('restaurants').get()
     console.log('ERROR RETRIEVING RESTAURANTS', err)
   })
 
+////////////////////////////////// GET USERS ENDPOINT //////////////////////////////////////////
 server.get('/users', (req, res) => {
   const usersArr = [];
   db.collection('users').get()
