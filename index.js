@@ -2,7 +2,7 @@ const server = require("./api/server");
 
 const admin = require('firebase-admin');
 
-let serviceAccount = require('./key/learningfirestore-261822-4f3dbc0c9255.json');
+let serviceAccount = require('./realKey/ServiceAccountKey.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
@@ -39,7 +39,9 @@ let setBilly = newDocRef.set({
     'second-middle': 'bobbers',
     'last': 'bobston',
     'born': 2112,
-    'eats': 'lots of food'
+    'eats': 'lots of food',
+    'from': 'springfield',
+    'likes': ['dogs', 'cats', 'monkeys', 54, {'getting': 'paid', 'the-year': 1957}]
 })
 
 
