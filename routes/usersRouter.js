@@ -38,11 +38,11 @@ router.get('/:docName', (req, res) => {
 
 ///////////////////////////// POST TO USERS COLLECTION ////////////////////////////////////
 router.post('/', (req, res) => {
-    const docname = req.body.docname;
+    
     const details = req.body.details;
-    Users.add(docname, details)
+    Users.add(details)
         .then(user => {
-            const userObj = {docName: docname, details}
+            const userObj = {details}
             res.status(201).json(userObj)
         })
         .catch(err => {

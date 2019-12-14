@@ -18,10 +18,9 @@ function getByDoc(docName){
             .get();
 };
 
-function add(docname, details){
+function add(details){
     return db.collection('users')
-            .doc(docname)
-            .set(details)
+            .add(details)
 };
 
 function update(docname, details){
