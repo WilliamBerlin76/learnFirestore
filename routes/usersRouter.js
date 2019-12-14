@@ -1,14 +1,14 @@
 const router = require('express').Router();
 
-const db = require('../config/firestore-config')
+const Users = require('../models/usersModel');
 
 ////////////////////////////////// GET USERS ENDPOINT //////////////////////////////////////////
 router.get('/', (req, res) => {
     const usersArr = [];
-    db.collection('users').get()
+    Users.getAll()
       .then(users => {
         users.forEach(doc => {
-          usersArr.push(doc.id, '===========', doc.data())
+          usersArr.push('=========',doc.id, '===========', doc.data())
         })
         res.json(usersArr)
       })
@@ -20,11 +20,11 @@ router.get('/', (req, res) => {
 
 ///////////////////////////// POST TO USERS COLLECTION ////////////////////////////////////
 router.post('/', (req, res) => {
-    const docu = req.body.docname;
+    const docname = req.body.docname;
     const details = req.body.details;
-    db.collection('users').doc(docu).set(details)
+    Users.add(docname, details)
         .then(user => {
-            const userObj = {docName: docu, details}
+            const userObj = {docName: docname, details}
             res.status(201).json(userObj)
         })
         .catch(err => {
@@ -36,12 +36,12 @@ router.post('/', (req, res) => {
   
 //////////////////// PUT REQUEST TO USERS COLLECTION BY DOCUMENT ////////////////////
 router.put('/:doc', (req, res) => {
-    const docu = req.body.docname;
+    const docname = req.body.docname;
     const details = req.body.details;
 
-    db.collection('users').doc(docu).update(details)
+    Users.update(docname, details)
         .then(user => {
-            const userObj = {docName: docu, details}
+            const userObj = {docName: docname, details}
             res.status(200).json(userObj)
         })
         .catch(err => {
@@ -54,7 +54,7 @@ router.put('/:doc', (req, res) => {
   
 router.delete('/:docName', (req, res) => {
     const docName = req.params.docName
-    db.collection('users').doc(docName).delete()
+    Users.remove(docName)
         .then(user => {
             res.status(200).json({message: 'the selected doc was deleted'})
         })
