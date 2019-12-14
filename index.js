@@ -53,25 +53,25 @@ let setMcDs = firstRestaurant.set({
 })
 
 ///////////////////GET DATA//////////////////////
-db.collection('users').get()
-  .then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log(doc.id, '=>', doc.data());
-    });
-  })
-  .catch((err) => {
-    console.log('Error getting documents', err);
-  });
+// db.collection('users').get()
+//   .then((snapshot) => {
+//     snapshot.forEach((doc) => {
+//       console.log(doc.id, '=>', doc.data());
+//     });
+//   })
+//   .catch((err) => {
+//     console.log('Error getting documents', err);
+//   });
 
-db.collection('restaurants').get()
-  .then(snapshot => {
-    snapshot.forEach(doc => {
-      console.log(doc.id, '🍔', doc.data())
-    })
-  })
-  .catch(err => {
-    console.log('ERROR RETRIEVING RESTAURANTS', err)
-  })
+// db.collection('restaurants').get()
+//   .then(snapshot => {
+//     snapshot.forEach(doc => {
+//       console.log(doc.id, '🍔', doc.data())
+//     })
+//   })
+//   .catch(err => {
+//     console.log('ERROR RETRIEVING RESTAURANTS', err)
+//   })
 
 ////////////////////////////////// GET USERS ENDPOINT //////////////////////////////////////////
 server.get('/users', (req, res) => {
@@ -86,6 +86,20 @@ server.get('/users', (req, res) => {
     .catch(err => {
       console.log('GETTING USERS ENDPOINT ERR', err)
       res.status(500).json({error: 'there was an error getting the users'})
+    })
+});
+
+server.post('/users', (req, res) => {
+  const docu = req.body.docname;
+  const details = req.body.details;
+  db.collection('users').doc(docu).set(details)
+    .then(user => {
+      const userObj = {docName: docu, details}
+      res.status(200).json(userObj)
+    })
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({ error: 'there was an error adding the user to the server'})
     })
 })
 server.listen(5000, () => console.log(`\n=== server listening on port 5000 === \n`))
