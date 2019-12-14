@@ -54,9 +54,8 @@ router.post('/', (req, res) => {
   
 //////////////////// PUT REQUEST TO USERS COLLECTION BY DOCUMENT ////////////////////
 router.put('/:docName', (req, res) => {
-    const docname = req.body.docname;
-    const details = req.body.details;
-
+    const docname = req.params.docName;
+    const details = req.body;
     Users.update(docname, details)
         .then(user => {
             const userObj = {docName: docname, details}
