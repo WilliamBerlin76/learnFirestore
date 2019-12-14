@@ -18,6 +18,24 @@ router.get('/', (req, res) => {
       })
 });
 
+///////////////////////////// GET USER BY DOCNAME //////////////////////////////////////////
+
+router.get('/:docName', (req, res) => {
+    const docName = req.params.docName;
+    Users.getByDoc(docName)
+        .then(user => {
+            const retUser = {
+                docName: user.id,
+                details: user.data()
+            }
+            res.status(200).json(retUser)
+        })
+        .catch(err => {
+            console.log('GET USER BY DOCNAME ERR', error)
+            res.status(500).json({error: "There was an error getting the user from the db"})
+        })
+});
+
 ///////////////////////////// POST TO USERS COLLECTION ////////////////////////////////////
 router.post('/', (req, res) => {
     const docname = req.body.docname;
@@ -35,7 +53,7 @@ router.post('/', (req, res) => {
   
   
 //////////////////// PUT REQUEST TO USERS COLLECTION BY DOCUMENT ////////////////////
-router.put('/:doc', (req, res) => {
+router.put('/:docName', (req, res) => {
     const docname = req.body.docname;
     const details = req.body.details;
 

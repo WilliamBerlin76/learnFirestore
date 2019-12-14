@@ -2,6 +2,7 @@ const db = require('../config/firestore-config');
 
 module.exports = {
     getAll,
+    getByDoc,
     add,
     remove,
     update
@@ -9,6 +10,12 @@ module.exports = {
 
 function getAll(){
     return db.collection('users').get()
+};
+
+function getByDoc(docName){
+    return db.collection('users')
+            .doc(docName)
+            .get();
 };
 
 function add(docname, details){
