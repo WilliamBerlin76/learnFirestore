@@ -18,9 +18,33 @@ function getByDoc(docName){
             .get();
 };
 
-function add(details){
-    return db.collection('users')
+async function add(details){
+    if (!details.reviews){
+        return db.collection('users')
+        .add(details)
+    } else {
+        db.collection('users')
             .add(details)
+        const usersName = details.first + ` ${details.last}`;
+        let restId = {};
+        let reviewersArr = [];
+        await db.collection('restaurants')
+            .where('name', '==', details.reviews)
+            .get()
+            .then(snapshot => {
+                snapshot.forEach(doc => {
+                    restId = {id: doc.id}
+                    if (doc.data().reviewers){
+                        doc.data().reviewers.map(item => {
+                            reviewersArr.push(item)
+                        })
+                    }
+                })
+        })
+        reviewersArr.push(usersName)
+        let docRef = db.collection('restaurants').doc(restId.id)
+        return docRef.update({reviewers: reviewersArr})
+    }
 };
 
 function update(docname, details){

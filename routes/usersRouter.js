@@ -39,7 +39,7 @@ router.get('/:docName', (req, res) => {
 ///////////////////////////// POST TO USERS COLLECTION ////////////////////////////////////
 router.post('/', (req, res) => {
     
-    const details = req.body.details;
+    const details = req.body;
     Users.add(details)
         .then(user => {
             const userObj = {details}
