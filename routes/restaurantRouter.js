@@ -52,6 +52,24 @@ router.post('/', (req, res) => {
         })
 });
 
+//////////////////////// POST ADD EMPLOYEES //////////////////////////////
+router.post('/:id/employees', (req, res) => {
+    const { id } = req.params;
+    const employeeName = req.body;
+
+    Restaurants.addEmployee(id, employeeName)
+        .then(rest => {
+            const retRest = {
+                id: rest.id,
+                name: employeeName
+            }
+            res.status(201).json(retRest)
+        })
+        .catch(err => {
+            console.log('POST TO EMPLOYEE SUBCOLLECTION', err);
+            res.status(500).json(err)
+        })
+});
 //////////////////////// UPDATE RESTAURANT //////////////////////////////
 router.put('/:id', (req, res) => {
     const { id } = req.params;
