@@ -6,7 +6,8 @@ module.exports = {
     add,
     update,
     remove,
-    addEmployee
+    addEmployee,
+    getEmployees
 }
 
 function getAll(){
@@ -29,6 +30,13 @@ function addEmployee(id, employeeName){
             .doc(id)
             .collection('employees')
             .add(employeeName)
+};
+
+function getEmployees(id){
+    return db.collection('restaurants')
+            .doc(id)
+            .collection('employees')
+            .get()
 }
 
 function update(id, changes){

@@ -70,6 +70,25 @@ router.post('/:id/employees', (req, res) => {
             res.status(500).json(err)
         })
 });
+
+//////////////////////// POST GET EMPLOYEES //////////////////////////////
+router.get('/:id/employees', (req, res) => {
+    const { id } = req.params;
+    const empArr = [];
+    Restaurants.getEmployees(id)
+        .then(emps => {
+            emps.forEach(doc => {
+                const data = doc.data()
+                empArr.push({id: doc.id, data})
+            });
+            res.status(200).json(empArr);
+        })
+        .catch(err => {
+            console.log('GETTING EMPLOYEES ERR', err);
+            res.status(500).json({error: 'there was an error getting the employees from the db'})
+        })
+})
+
 //////////////////////// UPDATE RESTAURANT //////////////////////////////
 router.put('/:id', (req, res) => {
     const { id } = req.params;
